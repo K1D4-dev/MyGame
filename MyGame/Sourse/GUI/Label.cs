@@ -11,6 +11,8 @@ public class Label : UiElement
     private static SpriteBatch _spriteBatch;
     private static Texture2D _fontTexture;
     private static Dictionary<char, Rectangle> _fontMap;
+    private static Texture2D _punctuationTexture;
+    private static Dictionary<char, Rectangle> _punctuationMap;
     
     public string Text { get; set; }
     private byte FontSize {get; set;}
@@ -25,6 +27,7 @@ public class Label : UiElement
     {
         _spriteBatch = spriteBatch;
         (_fontTexture,_fontMap) = AssetManager.LoadTexture<char>(writing, "Font");
+        (_punctuationTexture,_punctuationMap) = AssetManager.LoadTexture<char>("Punctuation", "Font");
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -39,10 +42,15 @@ public class Label : UiElement
                 _spriteBatch.Draw(_fontTexture, new Vector2(tempX,Y), rectangle, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
                 tempX += (rectangle.Width+1)*FontSize;
             }
+            else if (_punctuationMap.TryGetValue(c, out Rectangle rectangle1))
+            {
+                _spriteBatch.Draw(_punctuationTexture, new Vector2(tempX,Y), rectangle1, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
+                tempX += (rectangle1.Width+1)*FontSize;
+            }
             else
             {
-                _fontMap.TryGetValue('A', out rectangle);
-                _spriteBatch.Draw(_fontTexture, new Vector2(tempX,Y), rectangle, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
+                _punctuationMap.TryGetValue('?', out rectangle);
+                _spriteBatch.Draw(_punctuationTexture, new Vector2(tempX,Y), rectangle, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
                 tempX += (rectangle.Width+1)*FontSize;
             }
         }
