@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 
 
-namespace MyGame_v1.Utils;
+namespace MyGame.Utils;
 
 public class PerformanceMonitor
 {

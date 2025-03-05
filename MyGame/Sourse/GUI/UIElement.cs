@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MyGame_v1;
+namespace MyGame;
 
 public abstract class UiElement
 {

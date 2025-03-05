@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MyGame_v1.Utils;
+using MyGame.Utils;
 
-namespace MyGame_v1.GUI;
+namespace MyGame.GUI;
 
 public class Label : UiElement
 {
@@ -29,29 +29,30 @@ public class Label : UiElement
         (_fontTexture,_fontMap) = AssetManager.LoadTexture<char>(writing, "Font");
         (_punctuationTexture,_punctuationMap) = AssetManager.LoadTexture<char>("Punctuation", "Font");
     }
-
+    
     public override void Draw(SpriteBatch spriteBatch)
     {
         int tempX = X;
+            
         foreach (char c in Text)
         {
             
             
-            if (_fontMap.TryGetValue(c, out Rectangle rectangle))
+            if (_fontMap.TryGetValue(c, out Rectangle rectangle1))
             {
-                _spriteBatch.Draw(_fontTexture, new Vector2(tempX,Y), rectangle, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
-                tempX += (rectangle.Width+1)*FontSize;
-            }
-            else if (_punctuationMap.TryGetValue(c, out Rectangle rectangle1))
-            {
-                _spriteBatch.Draw(_punctuationTexture, new Vector2(tempX,Y), rectangle1, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
+                _spriteBatch.Draw(_fontTexture, new Vector2(tempX,Y), rectangle1, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
                 tempX += (rectangle1.Width+1)*FontSize;
+            }
+            else if (_punctuationMap.TryGetValue(c, out Rectangle rectangle2))
+            {
+                _spriteBatch.Draw(_punctuationTexture, new Vector2(tempX,Y), rectangle2, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
+                tempX += (rectangle2.Width+1)*FontSize;
             }
             else
             {
-                _punctuationMap.TryGetValue('?', out rectangle);
-                _spriteBatch.Draw(_punctuationTexture, new Vector2(tempX,Y), rectangle, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
-                tempX += (rectangle.Width+1)*FontSize;
+                _punctuationMap.TryGetValue('?', out Rectangle rectangle3);
+                _spriteBatch.Draw(_punctuationTexture, new Vector2(tempX,Y), rectangle3, Color, 0f, Vector2.Zero, FontSize, SpriteEffects.None, 0f);
+                tempX += (rectangle3.Width+1)*FontSize;
             }
         }
     }
@@ -61,14 +62,18 @@ public class Label : UiElement
         int width = 0;
         foreach (char c in Text)
         {
-            if (_fontMap.TryGetValue(c, out Rectangle rectangle))
+            if (_fontMap.TryGetValue(c, out Rectangle rectangle1))
             {
-                width += rectangle.Width+1;
+                width += rectangle1.Width+1;
+            }
+            else if (_punctuationMap.TryGetValue(c, out Rectangle rectangle2))
+            {
+                width += rectangle2.Width+1;
             }
             else
             {
-                _fontMap.TryGetValue('A', out rectangle);
-                width += rectangle.Width+1;
+                _punctuationMap.TryGetValue('?', out Rectangle rectangle3);
+                width += rectangle3.Width+1;
             }
         }
         return width;

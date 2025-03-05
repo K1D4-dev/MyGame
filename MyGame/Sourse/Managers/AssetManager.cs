@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 
-namespace MyGame_v1.Utils;
+namespace MyGame.Utils;
 
 public static class AssetManager
 {

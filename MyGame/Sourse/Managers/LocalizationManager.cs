@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
-using MyGame_v1.GUI;
+using MyGame.GUI;
 using Newtonsoft.Json;
 
-namespace MyGame_v1;
+namespace MyGame;
 
 public static class LocalizationManager
 {

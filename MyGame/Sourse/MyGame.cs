@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MyGame_v1;
-using MyGame_v1.GUI;
-using MyGame_v1.Utils;
+
+using MyGame.GUI;
+using MyGame.Scene;
+using MyGame.Sourse.Managers;
+using MyGame.Utils;
 
 namespace MyGame;
 
@@ -33,14 +36,15 @@ public class MyGame : Game
     {
         // TODO: Add your initialization logic here
         
-       // _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-       // _graphics.PreferredBackBufferHeight =  GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+       _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+       _graphics.PreferredBackBufferHeight =  GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         _graphics.ApplyChanges();
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
+        
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         AssetManager.Load(GraphicsDevice);
         LocalizationManager.LoadLanguage(_spriteBatch,"EN");
@@ -49,8 +53,7 @@ public class MyGame : Game
         
         Button.Load(_spriteBatch);
 
-        _button = new Button(LocalizationManager.GetTranslation("new_game"), 10, 100,100, Color.Black);
-        _label = new Label("",4,16,0,Color.White);
+        SceneManager.SetScene(new MainMenuScene(_spriteBatch));
 
 
         // TODO: use this.Content to load your game content here
@@ -60,10 +63,10 @@ public class MyGame : Game
     {
         
         InputManager.KeyControl();
-        _label.Text = $"FPS: {PerformanceMonitor.Fps(gameTime)}";
-       
+        
+        SceneManager.Update(gameTime);
   
-        _button.Update(gameTime);
+     
         // TODO: Add your update logic here
 
         base.Update(gameTime);
@@ -75,8 +78,7 @@ public class MyGame : Game
         
         _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
         
-        _label.Draw(_spriteBatch);
-        _button.Draw(_spriteBatch);
+        SceneManager.Draw(_spriteBatch);
 
         _spriteBatch.End();
 

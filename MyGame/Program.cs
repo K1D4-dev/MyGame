@@ -1,2 +1,3 @@
-﻿using var game = new MyGame.MyGame();
+
+using var game = new MyGame.MyGame();
 game.Run();
